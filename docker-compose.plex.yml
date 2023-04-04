@@ -1,0 +1,54 @@
+version: '3.7'
+
+volumes:
+  movies:
+    driver_opts:
+      type: "nfs4"
+      o: "nfsvers=4,addr=192.168.1.10,nolock,soft,rw"
+      device: ":/mnt/v1_rz2/movies"
+  series:
+    driver_opts:
+      type: "nfs4"
+      o: "nfsvers=4,addr=192.168.1.10,nolock,soft,rw"
+      device: ":/mnt/v1_rz2/series"
+
+services:
+  plex:
+    image: plexinc/pms-docker
+    restart: unless-stopped
+    container_name: plexms
+    ports:
+      - "32400:32400/tcp"
+      - "3005:3005/tcp"
+      - "8324:8324/tcp"
+      - "32469:32469/tcp"
+      - "1900:1900/udp"
+      - "32410:32410/udp"
+      - "32412:32412/udp"
+      - "32413:32413/udp"
+      - "32414:32414/udp"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - PLEX_CLAIM=${PLEX_CLAIM}
+      - HOSTNAME=${HOSTNAME}
+      - ADVERTISE_IP="http://${IP}:32400/"
+    volumes:
+      - ./config:/config
+      - ./transcode:/transcode
+      - series:/data/series
+      - movies:/data/movies
+
+  tautulli:
+    image: tautulli/tautulli
+    container_name: tautulli
+    restart: unless-stopped
+    volumes:
+      - ./tautulli/config:/config
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    ports:
+      - "8181:8181"
