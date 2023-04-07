@@ -37,8 +37,16 @@ services:
     volumes:
       - ./config:/config
       - ./transcode:/transcode
-      - series:/data/series
-      - movies:/data/movies
+      - type: volume
+        source: series
+        target: /data/series
+        volume:
+          nocopy: true
+      - type: volume
+        source: movies
+        target: /data/movies
+        volume:
+          nocopy: true
 
   tautulli:
     image: tautulli/tautulli
