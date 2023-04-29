@@ -19,18 +19,18 @@ sudo usermod -a -G mediacenter jackett
 sudo usermod -a -G mediacenter overseerr
 
 # Make directories
-sudo mkdir -pv ${base_dir}/docker/{sonarr,radarr,prowlarr,qbittorrent,jackett,overseerr}-config
+sudo mkdir -pv ${base_dir}/config/{sonarr,radarr,prowlarr,qbittorrent,jackett,overseerr}
 sudo mkdir -pv ${base_dir}/data/{torrents,media}/{tv,movies}
 
 # Set permissions
 sudo chmod -R 775 ${base_dir}/data/
 sudo chown -R $(id -u):mediacenter ${base_dir}/data/
-sudo chown -R sonarr:mediacenter ${base_dir}/docker/sonarr-config
-sudo chown -R radarr:mediacenter ${base_dir}/docker/radarr-config
-sudo chown -R prowlarr:mediacenter ${base_dir}/docker/prowlarr-config
-sudo chown -R qbittorrent:mediacenter ${base_dir}/docker/qbittorrent-config
-sudo chown -R jackett:mediacenter ${base_dir}/docker/jackett-config
-sudo chown -R overseerr:mediacenter ${base_dir}/docker/overseerr-config
+sudo chown -R sonarr:mediacenter ${base_dir}/config/sonarr
+sudo chown -R radarr:mediacenter ${base_dir}/config/radarr
+sudo chown -R prowlarr:mediacenter ${base_dir}/config/prowlarr
+sudo chown -R qbittorrent:mediacenter ${base_dir}/config/qbittorrent
+sudo chown -R jackett:mediacenter ${base_dir}/config/jackett
+sudo chown -R overseerr:mediacenter ${base_dir}/config/overseerr
 
 echo "UID=$(id -u)" >> .env
 
