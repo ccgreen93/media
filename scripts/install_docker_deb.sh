@@ -27,6 +27,15 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 sudo groupadd docker
 sudo usermod -aG docker $USER
 
+# log size limit
+echo '{
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "50m",
+    "max-file": "3" 
+  }
+}' > /etc/docker/daemon.json
+
 # service
 sudo systemctl enable docker.service
 sudo systemctl enable containerd.service
