@@ -5,13 +5,13 @@ services:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
     environment:
-      - PUID=13001
-      - PGID=13000
-      - UMASK=002
-      - TZ=Australia/Sydney
+      - PUID=3001
+      - PGID=3000
+      - UMASK=${UMASK}
+      - TZ=${TZ}
     volumes:
-      - /mnt/truenas/config/sonarr-config:/config
-      - /mnt/truenas/data:/data
+      - ${BASE_DIR}/config/sonarr:/config
+      - ${BASE_DIR}/data:/data
     ports:
       - "8989:8989"
     restart: unless-stopped
@@ -20,41 +20,27 @@ services:
     image: lscr.io/linuxserver/radarr:latest
     container_name: radarr
     environment:
-      - PUID=13002
-      - PGID=13000
-      - UMASK=002
-      - TZ=Australia/Sydney
+      - PUID=3002
+      - PGID=3000
+      - UMASK=${UMASK}
+      - TZ=${TZ}
     volumes:
-      - /mnt/truenas/config/radarr-config:/config
-      - /mnt/truenas/data:/data
+      - ${BASE_DIR}/config/radarr:/config
+      - ${BASE_DIR}/data:/data
     ports:
       - "7878:7878"
-    restart: unless-stopped
-
-  overseerr:
-    image: sctx/overseerr:latest
-    container_name: overseerr
-    environment:
-      - PUID=13009
-      - PGID=13000
-      - UMASK=002
-      - TZ=Australia/Sydney
-    volumes:
-      - /mnt/truenas/config/overseerr-config:/app/config
-    ports:
-      - "5055:5055"
     restart: unless-stopped
 
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:develop
     container_name: prowlarr
     environment:
-      - PUID=13006
-      - PGID=13000
-      - UMASK=002
-      - TZ=Australia/Sydney
+      - PUID=3006
+      - PGID=3000
+      - UMASK=${UMASK}
+      - TZ=${TZ}
     volumes:
-      - /mnt/truenas/config/prowlarr-config:/config
+      - ${BASE_DIR}/config/prowlarr:/config
     ports:
       - "9696:9696"
     restart: unless-stopped
@@ -65,12 +51,28 @@ services:
     network_mode: host
     environment:
       - PUID=${UID}
-      - PGID=13000
+      - PGID=3000
       - VERSION=docker
-      - PLEX_CLAIM=claim-q3omNzt2fjzyKR84bQRv
+      - PLEX_CLAIM=${PLEX_CLAIM}
+      - HOSTNAME=${HOSTNAME}
+      - ADVERTISE_IP="http://${IP}:32400/"
     volumes:
-      - /mnt/truenas/config/plex-config:/config
-      - /mnt/truenas/data/media:/media
+      - ${BASE_DIR}/config/plex:/config
+      - ${BASE_DIR}/data/media:/media
+    restart: unless-stopped
+
+  overseerr:
+    image: sctx/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=3009
+      - PGID=3000
+      - UMASK=${UMASK}
+      - TZ=${TZ}
+    volumes:
+      - ${BASE_DIR}/config/overseerr:/app/config
+    ports:
+      - "5055:5055"
     restart: unless-stopped
 
   tautulli:
@@ -80,41 +82,41 @@ services:
       - plex
     environment:
       - PUID=${UID}
-      - PGID=13000
-      - TZ=Australia/Sydney
+      - PGID=3000
+      - TZ=${TZ}
     volumes:
-      - /mnt/truenas/config/tautulli-config:/config
+      - ${BASE_DIR}/config/tautulli:/config
     ports:
       - "8181:8181"
     restart: unless-stopped
 
-  jellyfin:
-    image: lscr.io/linuxserver/jellyfin:latest
-    container_name: jellyfin
-    environment:
-      - PUID=${UID}
-      - PGID=13000
-      - UMASK=002
-      - TZ=Australia/Sydney
-    volumes:
-      - /mnt/truenas/config/jellyfin-config:/config
-      - /mnt/truenas/data/media:/data
-    ports:
-      - "8096:8096"
-    restart: unless-stopped
+  # jellyfin:
+  #   image: lscr.io/linuxserver/jellyfin:latest
+  #   container_name: jellyfin
+  #   environment:
+  #     - PUID=${UID}
+  #     - PGID=3000
+  #     - UMASK=${UMASK}
+  #     - TZ=${TZ}
+  #   volumes:
+  #     - ${BASE_DIR}/config/jellyfin:/config
+  #     - ${BASE_DIR}/data/media:/data
+  #   ports:
+  #     - "8096:8096"
+  #   restart: unless-stopped
 
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
     environment:
-      - PUID=13007
-      - PGID=13000
-      - UMASK=002
-      - TZ=Australia/Sydney
+      - PUID=3007
+      - PGID=3000
+      - UMASK=${UMASK}
+      - TZ=${TZ}
       - WEBUI_PORT=8080
     volumes:
-      - /mnt/truenas/config/qbittorrent-config:/config
-      - /mnt/truenas/data/torrents:/data/torrents
+      - ${BASE_DIR}/config/qbittorrent:/config
+      - ${BASE_DIR}/data/torrents:/data/torrents
     ports:
       - "8080:8080"
       - "6881:6881"
