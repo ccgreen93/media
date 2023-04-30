@@ -1,17 +1,23 @@
-# media
+# Media
 
 ## Folder Structure
+```
+├── data
+  ├── torrents
+  │  ├── movies
+  │  └── tv
+  ├── media       # NFS Media
+  │  ├── movies
+  │  └── tv
+├── config
+  ├── sonarr
+  ├── radarr
+  ├── prowlarr
+  ├── jackett
+  ├── qbittorrent
+  └── overseerr
+```
 
-data
-├── torrents
-│  ├── movies
-│  ├── music
-|  ├── books
-│  └── tv
-├── movies
-├── music
-├── books
-└── tv
+## Env vars
 
-
-https://github.com/Luctia/ezarr
+Stored in `.env`
