@@ -39,7 +39,7 @@ sudo chown -R jackett:mediacenter "${parent_dir}/config/jackett"
 sudo chown -R qbittorrent:mediacenter "${parent_dir}/config/qbittorrent"
 sudo chown -R overseerr:mediacenter "${parent_dir}/config/overseerr"
 
-echo "UID=$(id -u)" >> .env
+# echo "UID=$(id -u)" >> .env
 
 # nfs
 # 192.168.1.10:/mnt/v1_rz2/media contains series/movies folders
