@@ -20,8 +20,8 @@ parent_dir="$(dirname "$script_path")"
 #sudo usermod -a -G mediacenter overseerr
 
 # Make directories
-sudo mkdir -pv "${parent_dir}/config/{sonarr,radarr,prowlarr,jackett,qbittorrent,overseerr}"
-sudo mkdir -pv "${parent_dir}/data/{torrents,media}/{tv,movies}"
+sudo mkdir -pv ${parent_dir}/config/{sonarr,radarr,prowlarr,jackett,qbittorrent,overseerr}
+sudo mkdir -pv ${parent_dir}/data/{torrents,media}/{tv,movies}
 
 # Set permissions
 sudo chmod -R 775 "${parent_dir}/data/"
@@ -39,7 +39,7 @@ nfs_mount_base_path="${parent_dir}/data/media"
 
 # nfs
 # 192.168.1.10:/mnt/v1_rz2/media contains series/movies folders
-echo "${nfs_server}:${nfs_share_base_path}/movies ${nfs_mount_base_path}/movies nfs rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3 0 0" >> /etc/fstab
-echo "${nfs_server}:${nfs_share_base_path}/series ${nfs_mount_base_path}/series nfs rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3 0 0" >> /etc/fstab
+sudo echo "${nfs_server}:${nfs_share_base_path}/movies ${nfs_mount_base_path}/movies nfs rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3 0 0" >> /etc/fstab
+sudo echo "${nfs_server}:${nfs_share_base_path}/series ${nfs_mount_base_path}/series nfs rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3 0 0" >> /etc/fstab
 
 ## echo "UID=$(id -u)" >> "${parent_dir}/.env"
