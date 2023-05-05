@@ -65,7 +65,7 @@ services:
     image: sctx/overseerr:latest
     container_name: overseerr
     environment:
-      - PUID=3009
+      - PUID=3006
       - PGID=3000
       - UMASK=${UMASK}
       - TZ=${TZ}
@@ -109,7 +109,7 @@ services:
     image: lscr.io/linuxserver/qbittorrent:latest
     container_name: qbittorrent
     environment:
-      - PUID=3007
+      - PUID=3005
       - PGID=3000
       - UMASK=${UMASK}
       - TZ=${TZ}
