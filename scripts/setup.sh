@@ -4,12 +4,6 @@
 script_path="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 parent_dir="$(dirname "$script_path")"
 
-nfs_server="192.168.1.10"
-nfs_share_path="${parent_dir}/data/media"
-nfs_mount_path="${parent_dir}/data/media"
-
-echo "UID=$(id -u)" >> "${parent_dir}/.env"
-
 # Make users and group
 sudo useradd sonarr -u 3001
 sudo useradd radarr -u 3002
@@ -39,10 +33,13 @@ sudo chown -R jackett:mediacenter "${parent_dir}/config/jackett"
 sudo chown -R qbittorrent:mediacenter "${parent_dir}/config/qbittorrent"
 sudo chown -R overseerr:mediacenter "${parent_dir}/config/overseerr"
 
-# echo "UID=$(id -u)" >> .env
+nfs_server="192.168.1.10"
+nfs_share_base_path="/mnt/vol0/media"
+nfs_mount_base_path="${parent_dir}/data/media"
 
 # nfs
 # 192.168.1.10:/mnt/v1_rz2/media contains series/movies folders
-echo "${nfs_server}:${nfs_share_path} ${nfs_mount_path} nfs rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3 0 0" >> /etc/fstab
+echo "${nfs_server}:${nfs_share_base_path}/movies ${nfs_mount_base_path}/movies nfs rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3 0 0" >> /etc/fstab
+echo "${nfs_server}:${nfs_share_base_path}/series ${nfs_mount_base_path}/series nfs rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3 0 0" >> /etc/fstab
 
-# mount ${nfs_mount_path}
+# echo "UID=$(id -u)" >> "${parent_dir}/.env"
