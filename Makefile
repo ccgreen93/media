@@ -1,6 +1,11 @@
-all:
+up:
 	docker compose up -d
 
-plex:
-	docker compose -f docker-compose.plex.yml up -docker
+setup:
+	./scripts/setup.sh
 
+gitpull:
+	git pull
+
+gitpush:
+	git pull
