@@ -35,11 +35,12 @@ sudo chown -R overseerr:mediacenter "${parent_dir}/config/overseerr"
 
 nfs_server="192.168.1.10"
 nfs_share_base_path="/mnt/vol0/media"
-nfs_mount_base_path="${parent_dir}/data/media"
+nfs_mount_base_path="${parent_dir}/data"
 
 # nfs
 # 192.168.1.10:/mnt/v1_rz2/media contains series/movies folders
-sudo echo "${nfs_server}:${nfs_share_base_path}/movies ${nfs_mount_base_path}/movies nfs rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3 0 0" >> /etc/fstab
-sudo echo "${nfs_server}:${nfs_share_base_path}/series ${nfs_mount_base_path}/series nfs rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3 0 0" >> /etc/fstab
+sudo echo "${nfs_server}:${nfs_share_base_path}/movies ${nfs_mount_base_path}/media/movies nfs rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3 0 0" >> /etc/fstab
+sudo echo "${nfs_server}:${nfs_share_base_path}/series ${nfs_mount_base_path}/media/series nfs rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3 0 0" >> /etc/fstab
+sudo echo "${nfs_server}:${nfs_share_base_path}/torrents ${nfs_mount_base_path}/torrents nfs rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3 0 0" >> /etc/fstab
 
 ## echo "UID=$(id -u)" >> "${parent_dir}/.env"
