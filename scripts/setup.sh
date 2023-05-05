@@ -21,7 +21,7 @@ parent_dir="$(dirname "$script_path")"
 
 # Make directories
 sudo mkdir -pv ${parent_dir}/config/{sonarr,radarr,prowlarr,jackett,qbittorrent,overseerr}
-sudo mkdir -pv ${parent_dir}/data/{torrents,media}/{tv,movies}
+sudo mkdir -pv ${parent_dir}/data/{torrents,media}/{series,movies}
 
 # Set permissions
 sudo chmod -R 775 "${parent_dir}/data/"
