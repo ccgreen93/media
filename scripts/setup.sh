@@ -9,21 +9,19 @@ create_users_groups() {
   sudo useradd sonarr -u 3001
   sudo useradd radarr -u 3002
   sudo useradd prowlarr -u 3003
-  sudo useradd jackett -u 3004
-  sudo useradd qbittorrent -u 3005
-  sudo useradd overseerr -u 3006
+  sudo useradd qbittorrent -u 3004
+  sudo useradd overseerr -u 3005
   sudo groupadd mediacenter -g 3000
   sudo usermod -a -G mediacenter sonarr
   sudo usermod -a -G mediacenter radarr
   sudo usermod -a -G mediacenter prowlarr
   sudo usermod -a -G mediacenter qbittorrent
-  sudo usermod -a -G mediacenter jackett
   sudo usermod -a -G mediacenter overseerr
 }
 
 create_dirs() {
   # Make directories
-  sudo mkdir -pv ${parent_dir}/config/{sonarr,radarr,prowlarr,jackett,qbittorrent,overseerr}
+  sudo mkdir -pv ${parent_dir}/config/{sonarr,radarr,prowlarr,qbittorrent,overseerr}
   sudo mkdir -pv ${parent_dir}/data/{torrents,media}/{series,movies}
 }
 
@@ -44,7 +42,6 @@ set_permissions() {
   sudo chown -R sonarr:mediacenter "${parent_dir}/config/sonarr"
   sudo chown -R radarr:mediacenter "${parent_dir}/config/radarr"
   sudo chown -R prowlarr:mediacenter "${parent_dir}/config/prowlarr"
-  sudo chown -R jackett:mediacenter "${parent_dir}/config/jackett"
   sudo chown -R qbittorrent:mediacenter "${parent_dir}/config/qbittorrent"
   sudo chown -R overseerr:mediacenter "${parent_dir}/config/overseerr"
 }

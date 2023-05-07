@@ -45,6 +45,38 @@ services:
       - "9696:9696"
     restart: unless-stopped
 
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=3004
+      - PGID=3000
+      - UMASK=${UMASK}
+      - TZ=${TZ}
+      - WEBUI_PORT=8080
+    volumes:
+      - ${BASE_DIR}/config/qbittorrent:/config
+      - ${BASE_DIR}/data/torrents:/data/torrents
+    ports:
+      - "8080:8080"
+      - "6881:6881"
+      - "6881:6881/udp"
+    restart: unless-stopped
+
+  overseerr:
+    image: sctx/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=3005
+      - PGID=3000
+      - UMASK=${UMASK}
+      - TZ=${TZ}
+    volumes:
+      - ${BASE_DIR}/config/overseerr:/app/config
+    ports:
+      - "5055:5055"
+    restart: unless-stopped
+
   plex:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
@@ -59,20 +91,6 @@ services:
     volumes:
       - ${BASE_DIR}/config/plex:/config
       - ${BASE_DIR}/data/media:/media
-    restart: unless-stopped
-
-  overseerr:
-    image: sctx/overseerr:latest
-    container_name: overseerr
-    environment:
-      - PUID=3006
-      - PGID=3000
-      - UMASK=${UMASK}
-      - TZ=${TZ}
-    volumes:
-      - ${BASE_DIR}/config/overseerr:/app/config
-    ports:
-      - "5055:5055"
     restart: unless-stopped
 
   tautulli:
@@ -104,22 +122,4 @@ services:
   #   ports:
   #     - "8096:8096"
   #   restart: unless-stopped
-
-  qbittorrent:
-    image: lscr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
-    environment:
-      - PUID=3005
-      - PGID=3000
-      - UMASK=${UMASK}
-      - TZ=${TZ}
-      - WEBUI_PORT=8080
-    volumes:
-      - ${BASE_DIR}/config/qbittorrent:/config
-      - ${BASE_DIR}/data/torrents:/data/torrents
-    ports:
-      - "8080:8080"
-      - "6881:6881"
-      - "6881:6881/udp"
-    restart: unless-stopped
 
