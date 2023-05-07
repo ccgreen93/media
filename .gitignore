@@ -3,3 +3,6 @@ data
 
 # config dir
 config
+
+# plex claim file
+plex_claim.txt
