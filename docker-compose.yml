@@ -35,7 +35,7 @@ services:
     image: lscr.io/linuxserver/prowlarr:develop
     container_name: prowlarr
     environment:
-      - PUID=3006
+      - PUID=3003
       - PGID=3000
       - UMASK=${UMASK}
       - TZ=${TZ}
