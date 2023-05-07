@@ -25,7 +25,7 @@
   │  └── series
   └── media
      ├── movies   # movies NFS share
-     └── series   # movies NFS share
+     └── series   # series NFS share
 ├── config
   ├── sonarr
   ├── radarr
