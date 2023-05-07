@@ -1,5 +1,12 @@
 ---
 version: "3.1"
+
+secrets:
+  # Secrets are single-line text files where the sole content is the secret
+  # Paths in this example assume that secrets are kept in local folder called ".secrets"
+  PLEX_CLAIM:
+    file: ./plex_claim.txt
+
 services:
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -85,12 +92,14 @@ services:
       - PUID=${UID}
       - PGID=3000
       - VERSION=docker
-      - PLEX_CLAIM=${PLEX_CLAIM}
+      - PLEX_CLAIM=/run/secrets/PLEX_CLAIM
       - HOSTNAME=${HOSTNAME}
       - ADVERTISE_IP="http://${IP}:32400/"
     volumes:
       - ${BASE_DIR}/config/plex:/config
       - ${BASE_DIR}/data/media:/media
+    secrets:
+      - PLEX_CLAIM
     restart: unless-stopped
 
   tautulli:
