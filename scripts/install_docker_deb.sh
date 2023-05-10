@@ -40,7 +40,7 @@ echo '{
     "max-size": "50m",
     "max-file": "3" 
   }
-}' > /etc/docker/daemon.json
+}' | sudo tee -a /etc/docker/daemon.json
 
 # service
 echo "enabling services"
