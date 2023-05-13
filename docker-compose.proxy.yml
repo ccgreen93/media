@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+
+  proxy-manager:
+    container_name: nginx-proxy-manager
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./config/nginx-proxy-manager/proxy-manager:/data
+      - ./config/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+    environment:
+      - PUID=${UID}
+      - PGID=${GID}
+      - TZ=${TZ}
+
+  organizr:
+    image: organizr/organizr:latest
+    container_name: organizr
+    depends_on:
+      - plex
+    environment:
+      - PUID=${UID}
+      - PGID=${GID}
+      - TZ=${TZ}
+    volumes:
+      - ${BASE_DIR}/config/organizr:/config
+    ports:
+      - "10000:80"
+    restart: unless-stopped
+
+  # traefik-reverse-proxy:
+  #   # The official v2 Traefik docker image
+  #   image: traefik:v2.10
+  #   # Enables the web UI and tells Traefik to listen to docker
+  #   command: --api.insecure=true --providers.docker
+  #   ports:
+  #     # The HTTP port
+  #     - "80:80"
+  #     # The Web UI (enabled by --api.insecure=true)
+  #     - "9090:8080"
+  #   volumes:
+  #     # So that Traefik can listen to the Docker events
+  #     - /var/run/docker.sock:/var/run/docker.sock
