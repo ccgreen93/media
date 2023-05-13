@@ -1,0 +1,34 @@
+$TTL 2d
+
+$ORIGIN garnet.cgreen.io.
+
+@               IN      SOA     ns.garnet.cgreen.io. ccgreen93.gmail.com. (
+                                2305131628      ; serial
+                                12h             ; refresh
+                                15m             ; retry
+                                3w              ; expire
+                                2h              ; minimum ttl
+                                )
+
+                IN      ns      ns.garnet.cgreen.io.
+
+ns              IN      A       192.168.1.27
+
+; -- custom dns records
+
+media           IN      A       192.168.1.27
+*.media         IN      A       192.168.1.27
+dashy           IN      A       192.168.1.27
+sonarr          IN      A       192.168.1.27
+radrr           IN      A       192.168.1.27
+prowlarr        IN      A       192.168.1.27
+qbittorrent     IN      A       192.168.1.27
+logarr          IN      A       192.168.1.27
+monitorr        IN      A       192.168.1.27
+proxymanager    IN      A       192.168.1.27
+organizr        IN      A       192.168.1.27
+nextcloud       IN      A       192.168.1.27
+piholeadmin     IN      A       192.168.1.27
+grafana         IN      A       192.168.1.27
+ha              IN      A       192.168.1.27
+tautulli        IN      A       192.168.1.27
