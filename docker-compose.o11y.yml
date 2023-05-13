@@ -10,7 +10,7 @@ services:
       - PGID=${GID}
       - TZ=${TZ}
     volumes:
-      - ${BASE_DIR}/config/logarr:/config
+      - ${BASE_DIR}/config/logarr/www-config.php:/config/www/logarr/assets/config/config.php
       - ${BASE_DIR}/config/radarr/logs/radarr.txt:/logs/radarr
       - ${BASE_DIR}/config/sonarr/logs/sonarr.txt:/logs/sonarr
       - ${BASE_DIR}/config/prowlarr/logs/prowlarr.txt:/logs/prowlarr
