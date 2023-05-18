@@ -59,8 +59,8 @@ services:
       - ${BASE_DIR}/data/torrents:/data/torrents
     ports:
       - "8080:8080"
-      - "6881:6881" # default container ports
-      - "6881:6881/udp"
+      # - "6881:6881" # default container ports
+      # - "6881:6881/udp"
       - "60881:60881"  # custom container ports
       - "60881:60881/udp"
     restart: unless-stopped

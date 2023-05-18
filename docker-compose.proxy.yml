@@ -1,8 +1,15 @@
-version: '3.8'
+version: "3"
+
+networks:
+  proxy:
+
+secrets:
+  PLEX_CLAIM:
+    file: ./secrets/tunnel_token.txt
 
 services:
 
-  proxy-manager:
+  proxymanager:
     container_name: nginx-proxy-manager
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
@@ -21,8 +28,6 @@ services:
   organizr:
     image: organizr/organizr:latest
     container_name: organizr
-    depends_on:
-      - plex
     environment:
       - PUID=${UID}
       - PGID=${GID}
@@ -30,8 +35,18 @@ services:
     volumes:
       - ${BASE_DIR}/config/organizr:/config
     ports:
-      - "10000:80"
+      - "9000:80"
     restart: unless-stopped
+
+  cloudflared:
+    container_name: cloudflared
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=/run/secrets/TUNNEL_TOKEN
+    secrets:
+      - TUNNEL_TOKEN
 
   # traefik-reverse-proxy:
   #   # The official v2 Traefik docker image

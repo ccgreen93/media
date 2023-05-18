@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3"
 
 services:
 
@@ -16,3 +16,13 @@ services:
       - ./config/bind9/config:/etc/bind
       - ./config/bind9/cache:/var/cache/bind
       - ./config/bind9/records:/var/lib/bind
+
+  # dnsmasq:
+  #   restart: always
+  #   image: strm/dnsmasq
+  #   volumes:
+  #     - ./config/dnsmasq/dnsmasq.conf:/etc/dnsmasq.conf
+  #   ports:
+  #     - "53:53/udp"
+  #   cap_add:
+  #     - NET_ADMIN

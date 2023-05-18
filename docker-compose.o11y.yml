@@ -1,6 +1,45 @@
-version: "3.1"
+version: "3"
+
+networks:
+  o11y:
 
 services:
+  # loki:
+  #   container_name: loki
+  #   image: grafana/loki:latest
+  #   volumes:
+  #     - ${BASE_DIR}/config/loki:/etc/loki
+  #   ports:
+  #     - "3100:3100"
+  #   restart: unless-stopped
+  #   command: -config.file=/etc/loki/loki-config.yml
+  #   networks:
+  #     - o11y
+
+  # promtail:
+  #   container_name: promtail
+  #   image: grafana/promtail:latest
+  #   volumes:
+  #     - /var/log:/var/log
+  #     - ${BASE_DIR}/config/promtail:/etc/promtail
+  #   # ports:
+  #   #   - "1514:1514" # this is only needed if you are going to send syslogs
+  #   restart: unless-stopped
+  #   command: -config.file=/etc/promtail/promtail-config.yml
+  #   networks:
+  #     - o11y
+
+  # grafana:
+  #   container_name: grafana
+  #   image: grafana/grafana:latest
+  #   user: "1000"
+  #   volumes:
+  #   - ${BASE_DIR}/config/grafana:/var/lib/grafana
+  #   ports:
+  #     - "3000:3000"
+  #   restart: unless-stopped
+  #   networks:
+  #     - o11y
 
   logarr:
     image: monitorr/logarr:latest
@@ -10,7 +49,7 @@ services:
       - PGID=${GID}
       - TZ=${TZ}
     volumes:
-      - ${BASE_DIR}/config/logarr/www-config.php:/config/www/logarr/assets/config/config.php
+      - ${BASE_DIR}/config/logarr:/config
       - ${BASE_DIR}/config/radarr/logs/radarr.txt:/logs/radarr
       - ${BASE_DIR}/config/sonarr/logs/sonarr.txt:/logs/sonarr
       - ${BASE_DIR}/config/prowlarr/logs/prowlarr.txt:/logs/prowlarr
@@ -20,6 +59,8 @@ services:
     ports:
       - "8888:80"
     restart: unless-stopped
+    networks:
+      - o11y
 
   monitorr:
     image: monitorr/monitorr:latest
@@ -33,18 +74,5 @@ services:
     ports:
       - "8889:80"
     restart: unless-stopped
-
-  filebrowser:
-    image: filebrowser/filebrowser:latest
-    container_name: filebrowser
-    environment:
-      - PUID=${UID}
-      - PGID=${GID}
-      - TZ=${TZ}
-    volumes:
-      - ${BASE_DIR}:/srv
-      - ${BASE_DIR}/config/filebrowser/config:/config
-      - ${BASE_DIR}/config/filebrowser/database:/database
-    ports:
-      - "9999:80"
-    restart: unless-stopped
+    networks:
+      - o11y
