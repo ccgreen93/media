@@ -6,26 +6,6 @@
 - nfs_common (optional, for nfs shares)
 - make (optional, for shorter commands)
 
-## Setup
-
-Recommended to set up on a Linux server.
-
-1. Ensure docker is installed
-
-   For debian linux, run `./scripts/install_docker_deb.sh` or `make install_docker`
-
-2. Setup Users, groups, directories and shares. Edit before using
-
-   `./scripts/setup.sh` or `make setup`
-
-3. If using NFS, ensure is configured properly and running.
-
-4. Bring up media center containers
-
-   `docker compose up -d` or 
-
-   To take it down, `docker compose down`
-
 ## Folder Structure
 
 ```
@@ -62,6 +42,76 @@ Stored in `.env`
 
 Enter plex claim in `plex_claim.txt`. Get by visiting here https://www.plex.tv/claim.
 
+## Setup
+
+Recommended to set up on a Linux server.
+
+1. Ensure docker is installed
+
+   For debian linux, run `./scripts/install_docker_deb.sh` or `make install_docker`
+
+2. Setup Users, groups, directories and shares. Edit before using
+
+   `./scripts/setup.sh` or `make setup`
+
+3. If using NFS, ensure is configured properly and running.
+
+4. Bring up media center containers
+
+   `make allup`
+
+   To take it down, `make alldown`
+
+5. Configure Apps
+
+   - Sonarr:
+     - Settings > Media Management:
+         - Importing:
+            - (Optional) Minimum Free Space: `1024`
+            - Use Hardlinks instead of Copy: Enabled
+         - File Management:
+            - Propers and repacks: `Do Not Prefer`
+         - Root Folders:
+            - Set root folder to series path: `/data/media/series`
+     - (add apps, connections, quality profiles, custom formats, change default torrent category to sonarr, etc.)
+   - Radarr:
+     - Settings > Media Management:
+         - Importing:
+            - (Optional) Minimum Free Space: `1024`
+            - Use Hardlinks instead of Copy: Enabled
+         - File Management:
+            - Propers and repacks: `Do Not Prefer`
+         - Root Folders:
+            - Set root folder to series path: `/data/media/movies`
+     - (add apps, connections, quality profiles, custom formats, etc.)
+   - qBittorrent:
+     - Options:
+       - Downloads:
+         - Delete .torrent files afterwards: Enabled
+         - Default Save Path: `/data/torrents`
+         - Run external program on torrent finished: Enabled <br>
+           Command: `chmod -R 775 "%F/"`
+       - Connection:
+         - (Optional) Port used for incoming connections: Set to 45000 < x < 65000 for potentially more peers. Ensure to set this in the docker compose ports for qBittorrent. ie. 60881
+         - (Optional) Proxy Server: configure a proxy server for connections. Strongly recommended. Probably OK to leave if using a VPN. Instructions for NordVPN [here](https://support.nordvpn.com/Connectivity/Proxy/1087802472/Proxy-setup-on-qBittorrent.htm).
+       - BitTorrent:
+         - Enable anonymous mode: Enabled
+         - Torrent Queueing: Enabled <br>
+           Maximum active downloads: `4` <br>
+           Maximum active uploads: `200` <br>
+           Maximum active torrents: `200`
+         - Do not count slow torrents in these limits: Enabled <br>
+           Download rate threshold: `2` <br>
+           Upload rate threshold: `2` <br>
+           Torrent inactivity timer: `60`
+         - When ratio reaches: Enabled, `1.01`
+         - When seeding time reaches: Enabled, `20160` (14 days, min required by some private torrent sites)
+         - then `Pause torrent`
+     - Categories: In the left-hand sidebar, right click on each category (create if not present) and set the Save Path.
+       - radarr - Save path: /data/torrents/movies
+       - sonarr - Save path: /data/torrents/series
+   - Prowlarr: (wip)
+
 ## Ports
 
 These are the ports running for each service, most are defaults.
@@ -74,7 +124,6 @@ These are the ports running for each service, most are defaults.
 | qBittorrent | 8080 (UI)<br>6881 (default, changed to higher port)<br>60881 (new custom port) | 
 | Overseerr | 5055 (UI) | 
 | Nginx Proxy Manager | 81 (UI)<br>80 (HTTP)<br>443 | 
-
 
 ## NFS
 
@@ -91,6 +140,8 @@ Before running the container you may need to disable the host systems dns which 
 1. Open `/etc/systemd/resolved.conf`, uncomment and set value `DNSStubListenerExtra=No`
 
 2. Restart systemd resolved: `systemctl restart systemd-resolved`
+
+### Cloudflared
 
 ## NordVPN
 
