@@ -4,7 +4,7 @@ networks:
   proxy:
 
 secrets:
-  PLEX_CLAIM:
+  TUNNEL_TOKEN:
     file: ./secrets/tunnel_token.txt
 
 services:
