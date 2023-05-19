@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Browse to git directory
 script_path="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 parent_dir="$(dirname "$script_path")"
