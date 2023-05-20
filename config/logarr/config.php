@@ -26,7 +26,7 @@ $config = array(
     'title' => 'Logarr',
 		// Site Title
 
-    'timezone' => 'UTC',
+    'timezone' => 'Australia/Sydney',
 		// Timezone used for UI clock. IF on Linux, this is automatically generated. If on Windows, set this to a preferred value, or the default timezone of UTC will be used. 
 		// timezone note 1: timezone format: ($timezone = 'America/Los_Angeles',) Timezones are listed here: https://php.net/manual/en/timezones.php
 
@@ -72,6 +72,8 @@ $logs = array(
     "Radarr" => '/logs/radarr/radarr.txt',
 
     "Prowlarr" => '/logs/prowlarr/prowlarr.txt',
+
+    "Tdarr" => '/logs/tdarr/Tdarr_Server_Log.txt',
 
     "qBittorrent" => '/logs/qbittorrent/qbittorrent.log',
 

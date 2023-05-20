@@ -49,13 +49,13 @@ services:
       - PGID=${GID}
       - TZ=${TZ}
     volumes:
-      - ${BASE_DIR}/config/logarr:/config
-      - ${BASE_DIR}/config/radarr/logs/radarr.txt:/logs/radarr
-      - ${BASE_DIR}/config/sonarr/logs/sonarr.txt:/logs/sonarr
-      - ${BASE_DIR}/config/prowlarr/logs/prowlarr.txt:/logs/prowlarr
-      - ${BASE_DIR}/config/qbittorrent/qBittorrent/logs/qbittorrent.log:/logs/qbittorrent
-      - ${BASE_DIR}/config/overseerr/logs/overseerr.log:/logs/overseerr
-      - ${BASE_DIR}/config/tautulli/logs/tautulli.log:/logs/tautulli
+      - ${BASE_DIR}/config/logarr/config.php:/config/www/logarr/assets/config/config.php
+      - ${BASE_DIR}/config/radarr/logs/radarr.txt:/logs/radarr/radarr.txt
+      - ${BASE_DIR}/config/sonarr/logs/sonarr.txt:/logs/sonarr/sonarr.txt
+      - ${BASE_DIR}/config/prowlarr/logs/prowlarr.txt:/logs/prowlarr/prowlarr.txt
+      - ${BASE_DIR}/config/qbittorrent/qBittorrent/logs/qbittorrent.log:/logs/qbittorrent/qbittorrent.log
+      - ${BASE_DIR}/config/overseerr/logs/overseerr.log:/logs/overseerr/overseerr.log
+      - ${BASE_DIR}/config/tautulli/logs/tautulli.log:/logs/tautulli/tautulli.log
     ports:
       - "8888:80"
     restart: unless-stopped
