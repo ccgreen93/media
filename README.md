@@ -10,19 +10,23 @@
 
 ```
 ├── data
-  ├── torrents     # torrents NFS share
-  │  ├── movies
-  │  └── series
-  └── media
-     ├── movies    # movies NFS share
-     └── series    # series NFS share
+|  ├── torrents     # torrents NFS share
+|  │  ├── movies
+|  │  └── series
+|  └── media
+|     ├── movies    # movies NFS share
+|     └── series    # series NFS share
 ├── config
-  ├── sonarr
-  ├── radarr
-  ├── prowlarr
-  ├── qbittorrent
-  ├── overseerr
-  └──...
+|  ├── sonarr
+|  ├── radarr
+|  ├── prowlarr
+|  ├── qbittorrent
+|  ├── overseerr
+|  └──...
+└── transcode       # transcode NFS share
+   ├── tdarr
+   └── plex (tbd)
+
 ```
 
 ## Env vars
@@ -46,11 +50,11 @@ Enter plex claim in `plex_claim.txt`. Get by visiting here https://www.plex.tv/c
 
 Recommended to set up on a Linux server.
 
-1. Ensure docker is installed
+1. Ensure docker is installed.
 
    For debian linux, run `./scripts/install_docker_deb.sh` or `make install_docker`
 
-2. Setup Users, groups, directories and shares. Edit before using
+2. Setup Users, groups, directories and shares. Edit before using.
 
    `./scripts/setup.sh` or `make setup`
 
@@ -66,23 +70,36 @@ Recommended to set up on a Linux server.
 
    - Sonarr:
      - Settings > Media Management:
-         - Importing:
-            - (Optional) Minimum Free Space: `1024`
-            - Use Hardlinks instead of Copy: Enabled
-         - File Management:
-            - Propers and repacks: `Do Not Prefer`
-         - Root Folders:
-            - Set root folder to series path: `/data/media/series`
+       - Root Folders:
+         - Set root folder to series path: `/data/media/series` (Important!)
+       - Importing:
+         - (Optional) Minimum Free Space: `1024`
+         - Use Hardlinks instead of Copy: Enabled
+       - File Management:
+         - Propers and repacks: `Do Not Prefer`
+     - Settings > Download Clients:
+       - Once Download Client is added, add Remote Path Mapping for the client (Important!)
+         Host: `<download client>`
+         Remote Path: `/data/torrents`
+         Local Path: `/data/torrents`
      - (add apps, connections, quality profiles, custom formats, change default torrent category to sonarr, etc.)
    - Radarr:
      - Settings > Media Management:
-         - Importing:
-            - (Optional) Minimum Free Space: `1024`
-            - Use Hardlinks instead of Copy: Enabled
-         - File Management:
-            - Propers and repacks: `Do Not Prefer`
-         - Root Folders:
-            - Set root folder to series path: `/data/media/movies`
+       - Root Folders:
+         - Set root folder to series path: `/data/media/movies` (Important!)
+       - Episode Name;ing:
+         - Replace Illegal Characters: Disabled
+           Just remove illegal characters
+       - Importing:
+         - (Optional) Minimum Free Space: `1024`
+         - Use Hardlinks instead of Copy: Enabled
+       - File Management:
+         - Propers and repacks: `Do Not Prefer`
+     - Settings > Download Clients:
+       - Once Download Client is added, add Remote Path Mapping for the client (Important!)
+         Host: `<download client>`
+         Remote Path: `/data/torrents`
+         Local Path: `/data/torrents`
      - (add apps, connections, quality profiles, custom formats, etc.)
    - qBittorrent:
      - Options:
@@ -121,7 +138,7 @@ These are the ports running for each service, most are defaults.
 | Sonarr | 8989 (UI) | 
 | Radarr | 7878 (UI) | 
 | Prowlarr | 9696 (UI) | 
-| qBittorrent | 8080 (UI)<br>6881 (default, changed to higher port)<br>60881 (new custom port) | 
+| qBittorrent | 8080 (UI)<br>~~6881~~ (default, changed to higher port)<br>60881 (new custom port) | 
 | Overseerr | 5055 (UI) | 
 | Nginx Proxy Manager | 81 (UI)<br>80 (HTTP)<br>443 | 
 
@@ -155,4 +172,6 @@ $nordservers | Where-Object features -match "socks=True" | Select-Object name, d
 
 ## Resources
 
-- https://trash-guides.info/Hardlinks/How-to-setup-for/Docker/
+- <https://trash-guides.info/Hardlinks/How-to-setup-for/Docker/>
+- <https://github.com/Luctia/ezarr>
+- <https://support.nordvpn.com/Connectivity/Proxy/1087802472/Proxy-setup-on-qBittorrent.htm>
