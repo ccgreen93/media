@@ -18,7 +18,7 @@ create_dirs() {
 
 nfs() {
 
-  # check nfs server provider
+  # check nfs server provided
   [ -z "$1" ] && printf "Skipping NFS setup, no server provided" && return
 
   nfs_server=$1
@@ -33,9 +33,9 @@ nfs() {
   # Add nfs shares to fstab
   # configured for 128KB record sizes
   printf "updating fstab..."
-  printf "%s %s %s %s 0 0" "${nfs_server}:${nfs_share_base_path}/movies" "${nfs_mount_base_path}/media/movies" "nfs" "rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3" | sudo tee -a /etc/fstab
-  printf "%s %s %s %s 0 0" "${nfs_server}:${nfs_share_base_path}/series" "${nfs_mount_base_path}/media/series" "nfs" "rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3" | sudo tee -a /etc/fstab
-  printf "%s %s %s %s 0 0" "${nfs_server}:${nfs_share_base_path}/torrents" "${nfs_mount_base_path}/torrents" "nfs" "rw,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3" | sudo tee -a /etc/fstab
+  printf "%s %s %s %s 0 0" "${nfs_server}:${nfs_share_base_path}/movies" "${nfs_mount_base_path}/media/movies" "nfs" "rw,nolock,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3" | sudo tee -a /etc/fstab
+  printf "%s %s %s %s 0 0" "${nfs_server}:${nfs_share_base_path}/series" "${nfs_mount_base_path}/media/series" "nfs" "rw,nolock,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3" | sudo tee -a /etc/fstab
+  printf "%s %s %s %s 0 0" "${nfs_server}:${nfs_share_base_path}/torrents" "${nfs_mount_base_path}/torrents" "nfs" "rw,nolock,noatime,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3" | sudo tee -a /etc/fstab
 
   # add nfs service dependency for docker to ensure
   # nfs shares are mounted before containers start
