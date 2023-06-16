@@ -5,7 +5,7 @@ networks:
 
 secrets:
   TUNNEL_TOKEN:
-    file: ./secrets/tunnel_token.txt
+    file: ${BASE_DIR}/secrets/tunnel_token.txt
 
 services:
 

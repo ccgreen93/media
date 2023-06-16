@@ -2,7 +2,7 @@ version: "3"
 
 secrets:
   PLEX_CLAIM:
-    file: ./secrets/plex_claim.txt
+    file: ${BASE_DIR}/secrets/plex_claim.txt
 
 services:
   plex:

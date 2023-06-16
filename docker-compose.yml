@@ -7,8 +7,8 @@ services:
     environment:
       - PUID=${UID}
       - PGID=${GID}
-      - UMASK=${UMASK}
       - TZ=${TZ}
+      - UMASK=${UMASK}
     volumes:
       - ${BASE_DIR}/config/sonarr:/config
       - ${BASE_DIR}/data:/data
@@ -22,13 +22,29 @@ services:
     environment:
       - PUID=${UID}
       - PGID=${GID}
-      - UMASK=${UMASK}
       - TZ=${TZ}
+      - UMASK=${UMASK}
     volumes:
       - ${BASE_DIR}/config/radarr:/config
       - ${BASE_DIR}/data:/data
     ports:
       - "7878:7878"
+    restart: unless-stopped
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=${UID}
+      - PGID=${GID}
+      - TZ=${TZ}
+      - UMASK=${UMASK}
+    volumes:
+      - ${BASE_DIR}/config/bazarr:/config
+      - ${BASE_DIR}/data/media/series:/tv
+      - ${BASE_DIR}/data/media/movies:/movies
+    ports:
+      - "6767:6767"
     restart: unless-stopped
 
   prowlarr:
@@ -37,8 +53,8 @@ services:
     environment:
       - PUID=${UID}
       - PGID=${GID}
-      - UMASK=${UMASK}
       - TZ=${TZ}
+      - UMASK=${UMASK}
     volumes:
       - ${BASE_DIR}/config/prowlarr:/config
     ports:
@@ -51,17 +67,17 @@ services:
     environment:
       - PUID=${UID}
       - PGID=${GID}
-      - UMASK=${UMASK}
       - TZ=${TZ}
+      - UMASK=${UMASK}
       - WEBUI_PORT=8080
     volumes:
       - ${BASE_DIR}/config/qbittorrent:/config
       - ${BASE_DIR}/data/torrents:/data/torrents
     ports:
       - "8080:8080"
-      # - "6881:6881" # default container ports
+      # - "6881:6881" # default container port
       # - "6881:6881/udp"
-      - "60881:60881"  # custom container ports
+      - "60881:60881"  # custom container port
       - "60881:60881/udp"
     restart: unless-stopped
 
